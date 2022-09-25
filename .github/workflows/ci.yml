@@ -81,9 +81,7 @@ jobs:
         run: composer install --prefer-dist --no-interaction --no-progress
 
       -
-        name: Run PHPStan (Deprecated functions)
-        run: ./vendor/bin/phpstan analyze --no-interaction --no-progress --memory-limit=4G --configuration=phpstan-deprecated.neon
-
-      -
-        name: Run PHPStan
-        run: ./vendor/bin/phpstan analyze --no-interaction --no-progress --memory-limit=4G
+        name: PHPStan Static Analysis
+        uses: php-actions/phpstan@master
+        with:
+          path: .
