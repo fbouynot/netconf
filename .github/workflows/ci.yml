@@ -30,6 +30,14 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  test:
+    - name: PHPStan Static Analysis
+    - uses: actions/checkout@v3
+    - uses: php-actions/composer@v6 # or alternative dependency management
+    - uses: php-actions/phpstan@v3
+      with:
+        memory_limit: 4G
+
   phpstan:
     name: PHP Static Analysis
     runs-on: ubuntu-latest
