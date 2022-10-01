@@ -1,4 +1,4 @@
 <?php
 
-$ttttta = 3;
-var_dump($ttttta);
+$tttttab = 3;
+var_dump($tttttab);
