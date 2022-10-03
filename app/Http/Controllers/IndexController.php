@@ -3,40 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class IndexController extends Controller
 {
 
-    public function index(): \Illuminate\View\View
-    {
-        return view('index');
-    }
-
-    public function indexPolflex(): \Illuminate\View\View
+    /**
+     * Return the form view
+     *
+     * @return View
+     */
+    public function indexPolflex(): View
     {
         return view('indexPolflex');
     }
 
-    public function config(Request $request): \Illuminate\View\View
-    {
-        $validatedData = $request->validate([
-                'name' => 'required|max:32|string',
-                'vlan_id' => 'required|integer|max_digits:4|max:4096|min:1',
-                'subnet' => 'required|max:18|string',
-                'ticket' => 'required|integer|max_digits:6|max:999999',
-                'description' => 'required|max:250|string'
-            ], [
-                'name.required' => 'Name field is required.',
-                'vlan_id.required' => 'Vlan ID field is required.',
-                'subnet.required' => 'Subnet field is required.',
-                'ticket.required' => 'Ticket number field is required.',
-                'description.required' => 'Description field is required.'
-            ]);
-
-        return view('config', $validatedData);
-    }
-
-    public function configPolflex(Request $request): \Illuminate\View\View
+    /**
+     * Return the config template
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function configPolflex(Request $request): View
     {
         $validatedData = $request->validate([
                 'name' => 'required|max:32|string',

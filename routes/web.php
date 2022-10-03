@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/polflex', [IndexController::class, 'indexPolflex']);
-Route::post('/polflex', [IndexController::class, 'configPolflex'])->name('configPolflex');
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [IndexController::class, 'indexPolflex']);
+Route::post('/', [IndexController::class, 'configPolflex'])->name('configPolflex');
