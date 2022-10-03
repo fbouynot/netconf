@@ -9,7 +9,7 @@ class IndexController extends Controller
 {
 
     /**
-     * Return the form view
+     * Return the form
      *
      * @return View
      */
