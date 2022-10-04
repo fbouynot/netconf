@@ -45,28 +45,21 @@ class IndexController extends Controller
             ]);
 
 
-        /* Find net and CIDR based on subnet */
-        $tmp_subnet = (array) explode('/', $validatedData['subnet_lan']);
-        $validatedData['net_lan'] = (string) $tmp_subnet[0];
-        $validatedData['cidr_lan'] = (int) $tmp_subnet[1];
-        unset($tmp_subnet);
-        /* Find Gateway based on net */
-        $validatedData['gateway_lan'] = (string) long2ip(ip2long($validatedData['net_lan']) + 1);
-        $validatedData['dhcp_start_lan'] = (string) long2ip(ip2long($validatedData['net_lan']) + 10);
-        $validatedData['dhcp_stop_lan'] = (string) long2ip(ip2long($validatedData['net_lan']) + 30);
-        /* Find Netmask from CIDR */
-        $validatedData['netmask_lan'] = (string) long2ip(-1 << (32 - (int)$validatedData['cidr_lan']));
+        $validatedData['net_lan'] = IpUtils::findNetwork($validatedData['subnet_lan']);
+        $validatedData['cidr_lan'] = IpUtils::findCidr($validatedData['subnet_lan']);
+        $validatedData['gateway_lan'] = IpUtils::findGateway($validatedData['net_lan']);
+        $validatedData['netmask_lan'] = IpUtils::findNetmask($validatedData['cidr_lan']);
+        $validatedData['dhcp_start_lan'] = (string) long2ip(ip2long($validatedData['net_lan']) + 10); // todo constant
+        $validatedData['dhcp_stop_lan'] = (string) long2ip(ip2long($validatedData['net_lan']) + 30); // todo variable
+        $validatedData['net_telemetry'] = IpUtils::findNetwork($validatedData['subnet_telemetry']);
+        $validatedData['cidr_telemetry'] = IpUtils::findCidr($validatedData['subnet_telemetry']);
+        $validatedData['gateway_telemetry'] = IpUtils::findGateway($validatedData['net_telemetry']);
+        $validatedData['ip_telemetry'] = IpUtils::findGateway($validatedData['gateway_telemetry']);
+        $validatedData['netmask_telemetry'] = IpUtils::findNetmask($validatedData['cidr_telemetry']);
 
-        /* Find net and CIDR based on subnet */
-        $tmp_subnet = (array) explode('/', $validatedData['subnet_telemetry']);
-        $validatedData['net_telemetry'] = (string) $tmp_subnet[0];
-        $validatedData['cidr_telemetry'] = (int) $tmp_subnet[1];
-        unset($tmp_subnet);
-        /* Find Gateway based on net */
-        $validatedData['gateway_telemetry'] = (string) long2ip(ip2long($validatedData['net_telemetry']) + 1);
-        $validatedData['ip_telemetry'] = (string) long2ip(ip2long($validatedData['net_telemetry']) + 2);
-        /* Find Netmask from CIDR */
-        $validatedData['netmask_telemetry'] = (string) long2ip(-1 << (32 - (int)$validatedData['cidr_telemetry']));
+
+
+
 
         $res = [];
         $openSSL = openssl_pkcs12_read($validatedData['pfx_file'], $res, $validatedData['pfx_password']);
@@ -97,7 +90,7 @@ var_dump($openSSL);
  TODO:
 - Import cert
 - Format ticket
-- Découper config
-- Ajout auth
-- Port anciens templates
+- Cut config
+- Add auth
+- Port old templates
 */
