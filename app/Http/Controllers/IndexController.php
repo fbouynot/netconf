@@ -35,9 +35,30 @@ class IndexController extends Controller
      *
      * @return View
      */
+    public function indexNewVlan(): View
+    {
+        return view('indexNewVlan');
+    }
+
+    /**
+     * Return the form
+     *
+     * @return View
+     */
     public function indexPolflex(): View
     {
         return view('indexPolflex');
+    }
+
+    /**
+     * Return the config template
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function configNewVlan(Request $request): View
+    {
+        return view('configNewVlan');
     }
 
     /**

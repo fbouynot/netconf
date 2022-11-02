@@ -14,5 +14,8 @@ use App\Http\Controllers\IndexController;
 |
 */
 
-Route::get('/', [IndexController::class, 'indexPolflex']);
-Route::post('/', [IndexController::class, 'configPolflex'])->name('configPolflex');
+Route::get('/', function() { return redirect()->route('indexNewVlan'); });
+Route::get('/polflex', [IndexController::class, 'indexPolflex'])->name('indexPolflex');
+Route::post('/polflex', [IndexController::class, 'configPolflex'])->name('configPolflex');
+Route::get('/newvlan', [IndexController::class, 'indexNewVlan'])->name('indexNewVlan');
+Route::post('/newvlan', [IndexController::class, 'configNewVlan'])->name('configNewVlan');
