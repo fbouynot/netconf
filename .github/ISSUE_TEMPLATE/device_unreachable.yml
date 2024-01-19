@@ -1,0 +1,22 @@
+name: Device unreachable
+description: Report a device is unreachable
+title: "[Unreachable]: "
+labels: ["location::kao", "task::run"]
+projects: ["instadeepai/21"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this report!
+  - type: checkboxes
+    id: addresses
+    attributes:
+      label: Reachable
+      options:
+        - label: Data interface
+        - label: Management interface
+        - label: IPMI interface
+  - type: textarea
+    id: more
+    attributes:
+      label: Other info
